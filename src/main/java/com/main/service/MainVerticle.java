@@ -106,20 +106,7 @@ public class MainVerticle extends AbstractVerticle {
                 services.put(service.getName(), service);
                 String insertSql = "insert into service(name, url)  values(?, ?);";
                 JsonArray params = new JsonArray().add(name).add(url);
-                connector.query(insertSql, params).setHandler(ar->{
-                    if(ar.succeeded()){
-                        req.response()
-                                .putHeader("content-type", "text/plain")
-                                .setStatusCode(HttpResponseStatus.CREATED.code())
-                                .end(Status.OK);
-                    }
-                    else{
-                        req.response()
-                                .setStatusCode(HttpResponseStatus.BAD_REQUEST.code())
-                                .end(Status.FAIL);
-                    }
-                });
-
+                connector.query(insertSql, params);
               } else {
                 req.response()
                     .setStatusCode(HttpResponseStatus.BAD_REQUEST.code())
